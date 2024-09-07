@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 from const.dataset_const import now_proj_dir, proj_names, proj_versions
-from train.preprocess import prep
+from process_data.preprocess import prep
 
 dataset_refined_dir = f'{now_proj_dir}/dataset_refined'
 

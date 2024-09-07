@@ -50,39 +50,39 @@ def ast_parse(src):
     preorder_traversal_ast(tree, lis)
     return lis
 
-
-# 此脚本在dataset_refined目录下生成ast node token文件-存储在ast_token下
-# 以dataset_refined/labeled_and_code_except_empty数据为基础
-
-
-dataset_refined_dir = f'{now_proj_dir}/dataset_refined'
-
-# 将原来的labeled data和source code整合到一起,但是如果该行的code是空串，则整个行舍弃
-# 将buggy的数量转化为是否有bug
-# 将数据整合到一起还有另一个目的，就是将其以parquet格式存储，可以独立读取列，之后的处理会更加方便
-labeled_and_code_except_empty_dir = f'{dataset_refined_dir}/labeled_and_code_except_empty/'
-ast_token_dir = f'{dataset_refined_dir}/ast_token/'
-
-data = pd.DataFrame()
-count = 0
-# 读取数据
-for i in range(len(proj_names)):
-    proj_name = proj_names[i]
-    version_list = proj_versions[i]
-
-    labeled_prefix = f'{labeled_and_code_except_empty_dir}{proj_name}/{proj_name}-'
-    ast_token_dir_proj = f'{ast_token_dir}{proj_name}'
-
-    if not os.path.exists(ast_token_dir_proj):
-        os.makedirs(ast_token_dir_proj)
-
-    for j in range(len(version_list)):
-        version = version_list[j]
-        labeled_par = f'{labeled_prefix}{version}.parquet'
-        target_txt = f'{ast_token_dir_proj}/{proj_name}-{version}.txt'
-        data = pd.read_parquet(labeled_par, columns=['src'])
-        token_llis = []
-        for src in data['src']:
-            token_llis.append(ast_parse(src))
-        print(f'now storing {target_txt}')
-        store_list_of_list(token_llis, target_txt)
+#
+# # 此脚本在dataset_refined目录下生成ast node token文件-存储在ast_token下
+# # 以dataset_refined/labeled_and_code_except_empty数据为基础
+#
+#
+# dataset_refined_dir = f'{now_proj_dir}/dataset_refined'
+#
+# # 将原来的labeled data和source code整合到一起,但是如果该行的code是空串，则整个行舍弃
+# # 将buggy的数量转化为是否有bug
+# # 将数据整合到一起还有另一个目的，就是将其以parquet格式存储，可以独立读取列，之后的处理会更加方便
+# labeled_and_code_except_empty_dir = f'{dataset_refined_dir}/labeled_and_code_except_empty/'
+# ast_token_dir = f'{dataset_refined_dir}/ast_token/'
+#
+# data = pd.DataFrame()
+# count = 0
+# # 读取数据
+# for i in range(len(proj_names)):
+#     proj_name = proj_names[i]
+#     version_list = proj_versions[i]
+#
+#     labeled_prefix = f'{labeled_and_code_except_empty_dir}{proj_name}/{proj_name}-'
+#     ast_token_dir_proj = f'{ast_token_dir}{proj_name}'
+#
+#     if not os.path.exists(ast_token_dir_proj):
+#         os.makedirs(ast_token_dir_proj)
+#
+#     for j in range(len(version_list)):
+#         version = version_list[j]
+#         labeled_par = f'{labeled_prefix}{version}.parquet'
+#         target_txt = f'{ast_token_dir_proj}/{proj_name}-{version}.txt'
+#         data = pd.read_parquet(labeled_par, columns=['src'])
+#         token_llis = []
+#         for src in data['src']:
+#             token_llis.append(ast_parse(src))
+#         print(f'now storing {target_txt}')
+#         store_list_of_list(token_llis, target_txt)

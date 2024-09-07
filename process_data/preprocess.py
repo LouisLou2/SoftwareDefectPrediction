@@ -18,3 +18,8 @@ def prep(df):
     # 将bug数量转为二分类
     df['bug'] = df['bug'].apply(lambda x: 1 if x > 0 else 0)
     return df
+
+
+def bug_to_binary(df):
+    df['bug'] = df['bug'].apply(lambda x: 1 if x > 0 else 0)
+    return df

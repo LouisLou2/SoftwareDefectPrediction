@@ -1,10 +1,8 @@
 import pandas as pd
-from javalang.parser import JavaSyntaxError
-from javalang.tokenizer import LexerError
 
 from const.dataset_const import proj_names, proj_versions, now_proj_dir
-from train.preprocess import prep, ast_parse
-from train.code_tokenize import get_embeddings
+from process_data.preprocess import prep, ast_parse
+from process_data.code_tokenize import get_embeddings
 
 labeled_code_dir = f'{now_proj_dir}/dataset/PROMISE/labeled_src_code/'
 
