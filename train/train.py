@@ -160,9 +160,9 @@ data = torch.zeros(n, 1, m, k)
 for i in range(n):
     if labels[i] == 0:
         # 标签为0的数据，均值为2，标准差为1的正态分布
-        data[i] = torch.randn(1, m, k) + 2
-    else:
         data[i] = torch.randn(1, m, k)
+    else:
+        data[i] = torch.randn(1, m, k)+1
 
 # 构建数据集和数据加载器
 dataset = MyDataset(data, labels)
